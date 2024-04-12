@@ -24,10 +24,8 @@ def show_board(board):
   for row in board:
     for col in row:
     print(col, end='\t')
-    print('\n')
-    
+    print('\n')    
 board = [[1,2,3],[4,'x',6],[7,8,9]]
-
 show_board(board)
 
 def set_players():
@@ -37,7 +35,7 @@ def set_players():
     player2 = 'X'
   else:
     player2 ='O'
-  return player1, player2[ ]
+  return player1, player2
   
 set_players()
 
@@ -79,7 +77,6 @@ def take_input(board, player):
   
 board = [['1','2','3'],['4','X','6'],['7','8','9']]
 player ='O'
-
 take_input(board, player)
 
 Please Enter a number between 1,9 represents an empty position:     
@@ -105,9 +102,7 @@ def check_win(board):
          board[0][0] == board[1][1] == board[2][2] or \
          board[0][2] == board[1][1] == board[2][0]
 board = [['o','x','x'],['o','o','x'],['x','o','9']]
-
 show_board(board)
-
 check_win(board)
 
 def play():
@@ -131,18 +126,3 @@ def play():
     if check_full_board(board):
     
 play()
-
-Please Enter a number between 1,9 represents an empty position:     
-
-Please Enter a number between 1,9 represents an empty position:    
-
-Please Enter a number between 1,9 represents an empty position:    
-
-Please Enter a number between 1,9 represents an empty position:     
-
-Please Enter a number between 1,9 represents an empty position:    
-
-Please Enter a number between 1,9 represents an empty position:     
-
-Please Enter a number between 1,9 represents an empty position:     
-
