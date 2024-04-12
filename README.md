@@ -1,4 +1,4 @@
-# Project-1-Guessing-Game
+# Project (2): Tic Tac Toe
 
 def create_empty_board():
   board = [[1,2,3],
