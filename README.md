@@ -1,128 +1,78 @@
-# Project (2): Tic Tac Toe
+Project-1-Guessing-Game
 
-def create_empty_board():
-  board = [[1,2,3],
-           [4,5,6],
-           [7,8,9]]
-  for row in board:
-    for col in row:
-     print(col, end='\t')
-    print('\n')
-    
-create_empty_board()
+def show_levels():
+  print('''The game level is
+  (1) Easy:
+   Limits:[1-10]
+   No. of trials:[3]
+  (2) Medium:
+   Limits:[1-100]
+   No. of trials:[7]
+  (3) Hard:
+   Limits:[1-1000]
+   No. of trials:[15] ''')
 
-board = [[1,2,3],
-           [4,5,6],
-           [7,8,9]]  # position  6  > board[1][2]
-           
-for row in board:
-    for col in row:
-        print(col, end='\t')
-    print('\n')
-    
-def show_board(board):
-  for row in board:
-    for col in row:
-    print(col, end='\t')
-    print('\n')    
-board = [[1,2,3],[4,'x',6],[7,8,9]]
-show_board(board)
-
-def set_players():
-  from random import choice
-  player1 = choice(['X','O'])
-  if player1 == 'O':
-    player2 = 'X'
-  else:
-    player2 ='O'
-  return player1, player2
-  
-set_players()
-
-def take_input(board, player):
+def game_level_choice():
   while True:
-    player_input = input('Please Enter a number between 1,9 represents an empty position:     ')
-    if player_input == '1' and board[0][0].isdigit() :
-      board[0][0] = player
-      break
-    elif player_input == '2' and board[0][1].isdigit():
-      board[0][1] = player
-      break
-    elif player_input == '3' and board[0][2].isdigit():
-      board[0][2] = player
-      break
-    elif player_input == '4' and board[1][0].isdigit():
-      board[1][0] = player
-      break
-    elif player_input == '5' and board[1][1].isdigit():
-      board[1][1] = player
-      break
-    elif player_input == '6' and board[1][2].isdigit():
-      board[1][2] = player
-      break
-    elif player_input == '7' and board[2][0].isdigit():
-      board[2][0] = player
-      break
-    elif player_input == '8' and board[2][1].isdigit():
-      board[2][1] = player
-      break
-    elif player_input == '9' and board[2][2].isdigit():
-      board[2][2] = player
+   game_level=input("The game level is:\n (1) Easy \t (2) Medium \t (3)Hard \t")
+   if game_level in ['1','2','3']:
+        game_level=int(game_level)
+        break
+   else:
+        print('please enter a valid number from 1, 2, or 3')
+        continue
+  return game_level
+
+def set_game_settings(game_level):
+  if game_level == 1:
+    limits = range(1,11)
+    n_trials = 3
+  elif game_level == 2:
+    limits = range(1,101)
+    n_trials = 7
+  else:
+    limits = range(1,1001)
+    n_trials = 15
+  return limits, n_trials
+
+def start_play(limits, n_trials):
+  from random import choice
+  hidden = choice(limits)
+  user_trials = 0
+  while user_trials < n_trials:
+    guess = int(input('Guess the number :   '))
+    user_trials +=1
+    if guess == hidden:
+      print(f'You got it successfully in {user_trials} trials')
       break
     else:
-      print('Invalid Choice')
-      continue
-      
-  show_board(board)
-  
-board = [['1','2','3'],['4','X','6'],['7','8','9']]
-player ='O'
-take_input(board, player)
+      if user_trials == n_trials:
+        print(f"Unfortunately, You tried {user_trials} trials. No more Trials!")
+        print(f'The hidden number is  {hidden}')
+      elif guess < hidden:
+        print('No, Increase!')
+      else:
+        print('No, Decrease!')
+    continue
 
-Please Enter a number between 1,9 represents an empty position:     
+def play_again():
+    while True:
+      play_again = input("Play again ? [0] No, [1] Yes:   ")
+      if play_again in ['1','0']:
+          break
+      else:
+          print('Invalid Choice! Please choose 0 or 1   ')
+    return int(play_again)
 
-Please Enter a number between 1,9 represents an empty position:   
-
-def check_full_board(board):
-  for row in board:
-   for col in row:
-     if col.isdigit():
-        return False
-  return True
-  
-board =[['o','x','x'],['4','x','0'],['x','0','x']]
-
-def check_win(board):
-  return board[0][0] == board[0][1] == board[0][2] or \
-         board[1][0] == board[1][1] == board[1][2] or \
-         board[2][0] == board[2][1] == board[2][2] or \
-         board[0][0] == board[1][0] == board[2][0] or \
-         board[0][1] == board[1][1] == board[2][1] or \
-         board[0][2] == board[1][2] == board[2][2] or \
-         board[0][0] == board[1][1] == board[2][2] or \
-         board[0][2] == board[1][1] == board[2][0]
-board = [['o','x','x'],['o','o','x'],['x','o','9']]
-show_board(board)
-check_win(board)
+play_again()
 
 def play():
-  player1, player2 = set_players()
-  print("Player1 :  ", player1)
-  print("Player2 :  ", player2, '\n')
-  board = [['1','2','3'],['4','5','6'],['7','8','9']]
-  show_board(board)
+  show_levels()
   while True:
-    for player in [player1, player2]:
-      print(f"{player} turn")
-      take_input(board, player)
-      if check_win(board):
-        print(f"{player} wins")
+    game_level = game_level_choice()
+    limits, n_trials = set_game_settings(game_level)
+    start_play(limits, n_trials)
+    if not play_again():
         break
-      if check_full_board(board):
-        print('Game Finished. Draw!')
-        break
-    if check_win(board):
-        break
-    if check_full_board(board):
-    
+
 play()
